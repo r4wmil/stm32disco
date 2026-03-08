@@ -3,3 +3,5 @@ Drivers/
 .mxproject
 startup_stm32f103xb.s
 STM32F103XX_FLASH.ld
+compile_commands.json
+.cache/
