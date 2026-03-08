@@ -9,5 +9,5 @@ stlink
 ```
 2. Build & flash
 ```
-make && sudo st-flash write build/stm32disco.bin 0x08000000
+make && sudo st-flash --reset write build/stm32disco.bin 0x08000000
 ```
