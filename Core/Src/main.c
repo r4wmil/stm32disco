@@ -49,6 +49,29 @@
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
+#ifdef APP_BLINK
+void AppInit() {
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, 0);
+}
+void AppLoop() {
+	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+	HAL_Delay(100);
+	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+	HAL_Delay(100);
+	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+	HAL_Delay(100);
+	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15);
+	HAL_Delay(100);
+}
+#endif /* APP_BLINK */
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -84,14 +107,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-	__HAL_RCC_GPIOD_CLK_ENABLE();
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, 0);
+	AppInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,14 +115,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
-		HAL_Delay(100);
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
-		HAL_Delay(100);
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
-		HAL_Delay(100);
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15);
-		HAL_Delay(100);
+		AppLoop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
